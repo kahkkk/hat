@@ -11,9 +11,9 @@ fn main() {
     .get("--file")
     .expect("File path is required");
 
-  let total_lines: i32 = parser 
+  let total_lines: u32 = parser 
     .get("--lines")
-    .and_then(|n| Some(n.parse::<i32>().unwrap()))
+    .and_then(|n| Some(n.parse::<u32>().unwrap()))
     .unwrap_or(10);
 
   let contents = fs::read_to_string(file_path)
