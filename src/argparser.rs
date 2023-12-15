@@ -7,31 +7,26 @@ pub struct Parser {
 
 impl Parser {
   pub fn read_args() -> Parser {
-    let args: Vec<String> = env::args().collect();
+    let mut params = env::args();
+    params.next();
 
-    let mut idx: usize = 1;
-    let mut params = HashMap::new();
-    
-    while idx < args.len() {
-      let curr = &args[idx];
+    let mut args = HashMap::new();
 
-      if curr.starts_with("--") {
-        let has_next = idx + 1 < args.len();
-        let is_boolean = !has_next || args[idx + 1].starts_with("--");
-
-        if has_next && !is_boolean {
-          params.insert(curr.to_owned(), args[idx + 1].to_owned());
-          idx += 2;
-        } else if is_boolean {
-          params.insert(curr.to_owned(), String::from("true").to_owned());
-          idx += 1;
-        }
-      } else {
-        idx += 1;
+    'outer: loop {
+      match params.next() {
+        Some(var) => {
+          if var.starts_with("--") {
+            args.insert(
+              var.to_owned().to_string(),
+              params.next().expect(&format!("The {} key must be have a value", &var).to_string())
+            );
+          }
+        },
+        None => break 'outer,
       }
     }
 
-    Parser { args: params }
+    Parser { args }
   }
 
   pub fn get(&self, key: &str) -> Option<&String> {
