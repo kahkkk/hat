@@ -13,9 +13,11 @@ impl Hat {
     let contents = fs::read_to_string(&config.path)
       .expect("File does not exists");
 
+    let mut i: u32 = 0;
     let lines = contents
-      .split("\n")
-      .collect::<Vec<&str>>()[..config.total_lines as usize]
+      .lines()
+      .take_while(|_| { let tmp = i; i += 1; tmp < config.total_lines })
+      .collect::<Vec<_>>()
       .join("\n");
 
     lines
