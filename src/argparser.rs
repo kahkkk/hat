@@ -7,9 +7,7 @@ pub struct Parser {
 
 impl Parser {
   pub fn read_args() -> Parser {
-    let mut params = env::args();
-    params.next();
-
+    let mut params = env::args().skip(1);
     let mut args = HashMap::new();
 
     'outer: loop {
