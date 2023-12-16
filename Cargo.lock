@@ -5,3 +5,12 @@ version = 3
 [[package]]
 name = "hat"
 version = "0.1.0"
+dependencies = [
+ "phosphophyllite",
+]
+
+[[package]]
+name = "phosphophyllite"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a803b9dbb1530d9ec4d338391b0d7ac0f92ad5e72b809995f26e341c94a37ef2"
