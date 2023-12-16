@@ -1,7 +1,12 @@
-use hat::{ Config, Parser, Hat };
+use hat::{ Config, Hat };
+use phosphophyllite::Parser;
 
 fn main() {
-  let config = Config::build(Parser::read_args());
+  let mut parser = Parser::new();
+  parser.add_arg("file");
+  parser.add_arg("lines");
+
+  let config = Config::build(parser.parse());
   let lines = Hat::read_to_string(&config);
 
   print!("{}", lines)

@@ -1,4 +1,4 @@
-use crate::{ Parser };
+use std::collections::HashMap;
 
 pub struct Config {
   pub path: String,
@@ -6,13 +6,13 @@ pub struct Config {
 }
 
 impl Config {
-  pub fn build(args: Parser) -> Config {
+  pub fn build(args: HashMap<String, String>) -> Config {
     let path = args
-      .get("--file")
+      .get("file")
       .expect("File path must be required.");
 
     let total_lines = args
-      .get("--lines")
+      .get("lines")
       .and_then(|n| Some(n.parse::<u32>().unwrap()))
       .unwrap_or(10);
 
